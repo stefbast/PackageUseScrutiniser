@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>c5e830ea-8806-4dea-9a50-222962965dca</ProjectGuid>
+    <ProjectGuid>{306BDCC1-2FEB-4A77-96E6-64FE38FD3ECC}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PackageUseScrutiniser.Cli</RootNamespace>
