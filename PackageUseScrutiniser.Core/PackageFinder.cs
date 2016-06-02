@@ -7,7 +7,7 @@ namespace PackageUseScrutiniser.Core
 {
     public class PackageFinder
     {
-        public IEnumerable<string> GetPackages(string path, string packageId)
+        public IEnumerable<string> GetPackages(string packageId, string path)
         {
             var packagesConfigs = Directory.EnumerateFiles(path, "packages.config", SearchOption.AllDirectories);
             foreach (var packageConfig in packagesConfigs)

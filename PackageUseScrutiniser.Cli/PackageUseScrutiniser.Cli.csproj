@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PackageUseScrutiniser.Cli</RootNamespace>
-    <AssemblyName>PackageUseScrutiniser.Cli</AssemblyName>
+    <AssemblyName>pus</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
