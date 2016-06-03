@@ -23,7 +23,7 @@ namespace PackageUseScrutiniser.Cli
             }
 
             var packageId = GetPackageId(args);            
-            var packageFinder = new PackageFinder();
+            var packageFinder = new PackageFinder(new FileFinder(), new XmlReader());
             
             foreach (var package in packageFinder.GetPackages(packageId, path))
             {

@@ -1,18 +1,25 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace PackageUseScrutiniser.Core
 {
     public class PackageFinder
     {
+        public IFileFinder FileFinder { get; set; }
+        public IXmlReader XmlReader { get; set; }
+
+        public PackageFinder(IFileFinder fileFinder, IXmlReader xmlReader)
+        {
+            FileFinder = fileFinder;
+            XmlReader = xmlReader;
+        }
+
         public IEnumerable<string> GetPackages(string packageId, string path)
         {
-            var packagesConfigs = Directory.EnumerateFiles(path, "packages.config", SearchOption.AllDirectories);
+            IEnumerable<string> packagesConfigs = FileFinder.GetFiles(path, "packages.config");
             foreach (var packageConfig in packagesConfigs)
             {
-                XDocument doc = XDocument.Load(packageConfig);
+                var doc = XmlReader.Read(packageConfig);
                 if (doc.Root == null)
                 {
                     yield break;
