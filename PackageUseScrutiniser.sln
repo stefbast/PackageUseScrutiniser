@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageUseScrutiniser.Cli",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageUseScrutiniser.Core", "PackageUseScrutiniser.Core\PackageUseScrutiniser.Core.csproj", "{FCC47336-AE30-4C8E-83BD-B6E5CD6B79BF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CAB9D234-A4E7-4A52-90AB-F3362D9D97E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageUseScrutiniser.Core.Tests", "PackageUseScrutiniser.Core.Tests\PackageUseScrutiniser.Core.Tests.csproj", "{89CE1A3D-B83D-4A75-82C3-7947D9B258B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +25,15 @@ Global
 		{FCC47336-AE30-4C8E-83BD-B6E5CD6B79BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCC47336-AE30-4C8E-83BD-B6E5CD6B79BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCC47336-AE30-4C8E-83BD-B6E5CD6B79BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89CE1A3D-B83D-4A75-82C3-7947D9B258B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89CE1A3D-B83D-4A75-82C3-7947D9B258B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89CE1A3D-B83D-4A75-82C3-7947D9B258B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89CE1A3D-B83D-4A75-82C3-7947D9B258B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{89CE1A3D-B83D-4A75-82C3-7947D9B258B6} = {CAB9D234-A4E7-4A52-90AB-F3362D9D97E9}
 	EndGlobalSection
 EndGlobal
