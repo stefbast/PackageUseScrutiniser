@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using PackageUseScrutiniser.Core;
 
 namespace PackageUseScrutiniser.Cli
@@ -9,36 +10,44 @@ namespace PackageUseScrutiniser.Cli
     {
         static void Main(string[] args)
         {
-            if (args.Length == 0 || args[0] == "--help" || args.Length > 2)
+            if (args.Length == 0 || args[0] == "--help")
             {
                 PrintHelp();
                 return;
             }
        
-            var path = GetPath(args);
-            if (!Directory.Exists(path))
-            {
-                Console.WriteLine("Path {0} does not exist", path);
-                return;
-            }
+            var paths = GetPaths(args);
+            var packageId = GetPackageId(args);
 
-            var packageId = GetPackageId(args);            
-            var packageFinder = new PackageFinder(new FileFinder(), new XmlReader());
-            
-            foreach (var package in packageFinder.GetPackages(packageId, path))
+            Console.WriteLine();
+            Console.WriteLine("Searching for {0}", packageId);
+            Console.WriteLine();
+
+            foreach (var path in paths)
             {
-                Console.WriteLine(package);
+                if (!Directory.Exists(path))
+                {
+                    Console.WriteLine("Path {0} does not exist", path);
+                    continue;
+                }
+
+                var packageFinder = new PackageFinder(new FileFinder(), new XmlReader());
+
+                foreach (var package in packageFinder.GetPackages(packageId, path))
+                {
+                    Console.WriteLine(package);
+                }
             }
         }
 
-        private static string GetPath(string[] args)
+        private static IList<string> GetPaths(string[] args)
         {
             if (args.Length >= 2)
             {
-                return args[1];
+                return args.Skip(1).ToList();
             }
             
-            return Directory.GetCurrentDirectory();                        
+            return new List<string> { Directory.GetCurrentDirectory() };
         }
 
         private static string GetPackageId(IList<string> args)
@@ -53,7 +62,7 @@ namespace PackageUseScrutiniser.Cli
 
         private static void PrintHelp()
         {
-            Console.WriteLine("usage: pus <package id> [<path>]");
+            Console.WriteLine("usage: pus <package id> [<path1> <path2> ...]");
             Console.WriteLine("\tIf no path is defined, uses the current path.");
         }
     }
