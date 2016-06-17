@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using PackageUseScrutiniser.Core;
 
 namespace PackageUseScrutiniser.Cli
@@ -9,19 +11,21 @@ namespace PackageUseScrutiniser.Cli
     internal static class Program
     {
         static void Main(string[] args)
-        {
+        {            
             if (args.Length == 0 || args[0] == "--help")
             {
                 PrintHelp();
                 return;
             }
-       
+
             var paths = GetPaths(args);
             var packageId = GetPackageId(args);
 
             Console.WriteLine();
             Console.WriteLine("Searching for {0}", packageId);
             Console.WriteLine();
+
+            StartSpinner();
 
             foreach (var path in paths)
             {
@@ -38,6 +42,19 @@ namespace PackageUseScrutiniser.Cli
                     Console.WriteLine(FormatResult(package));
                 }
             }
+        }
+
+        private static void StartSpinner()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                ConsoleSpiner spin = new ConsoleSpiner();
+                while (true)
+                {
+                    spin.Turn();
+                    Thread.Sleep(250);
+                }
+            });
         }
 
         private static string FormatResult(FindResult package)
