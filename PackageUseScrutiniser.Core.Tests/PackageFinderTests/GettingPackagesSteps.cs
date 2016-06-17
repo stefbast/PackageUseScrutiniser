@@ -18,7 +18,7 @@ namespace PackageUseScrutiniser.Core.Tests.PackageFinderTests
 
         private class PackageConfigResult
         {
-            public string PackageFileName { get; set; }            
+            public string PackageLocation { get; set; }            
             public string PackageVersion { get; set; }            
         }
 
@@ -56,7 +56,7 @@ namespace PackageUseScrutiniser.Core.Tests.PackageFinderTests
         [Then(@"return packages containing package id")]
         public void ThenReturnPackagesContainingPackageId(Table table)
         {
-            table.CompareToSet(_packages.Select(p => new PackageConfigResult{ PackageFileName = p.PackageName, PackageVersion = p.PackageVersion}));            
+            table.CompareToSet(_packages.Select(p => new PackageConfigResult{ PackageLocation = p.PackagesConfigLocation, PackageVersion = p.PackageVersion}));            
         }
     }
 }

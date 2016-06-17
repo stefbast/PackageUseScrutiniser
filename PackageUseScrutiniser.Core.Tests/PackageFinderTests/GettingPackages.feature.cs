@@ -84,25 +84,32 @@ namespace PackageUseScrutiniser.Core.Tests.PackageFinderTests
                         "File name",
                         "content"});
             table1.AddRow(new string[] {
-                        "package1.config",
-                        "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"package id\" version=" +
-                            "\"package version\"/></packages>"});
+                        "C:\\directory1\\packages.config",
+                        "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"package id 1\" versio" +
+                            "n=\"package version 1\"/></packages>"});
             table1.AddRow(new string[] {
-                        "package2.config",
-                        "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"other package id\" ve" +
-                            "rsion=\"other package version\"/></packages>"});
+                        "C:\\directory2\\packages.config",
+                        "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"package id 2\" versio" +
+                            "n=\"other package version\"/></packages>"});
+            table1.AddRow(new string[] {
+                        "C:\\directory3\\packages.config",
+                        "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"package id 1\" versio" +
+                            "n=\"package version 2\"/></packages>"});
 #line 4
   testRunner.Given("There are packages.config files with content", ((string)(null)), table1, "Given ");
-#line 8
-  testRunner.When("getting packages with \"package id\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 9
+  testRunner.When("getting packages with \"package id 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                        "package file name",
+                        "package location",
                         "package version"});
             table2.AddRow(new string[] {
-                        "package1.config",
-                        "package version"});
-#line 9
+                        "C:\\directory1\\",
+                        "package version 1"});
+            table2.AddRow(new string[] {
+                        "C:\\directory3\\",
+                        "package version 2"});
+#line 10
   testRunner.Then("return packages containing package id", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -114,28 +121,29 @@ namespace PackageUseScrutiniser.Core.Tests.PackageFinderTests
         public virtual void PackagesDoNotExistWithRequestedPackageId()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Packages do not exist with requested package id", ((string[])(null)));
-#line 13
+#line 15
  this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "File name",
                         "content"});
             table3.AddRow(new string[] {
-                        "package1.config",
-                        "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"other package id\"/><" +
-                            "/packages>"});
+                        "C:\\directory1\\packages.config",
+                        "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"package id 2\"/></pac" +
+                            "kages>"});
             table3.AddRow(new string[] {
-                        "package2.config",
-                        "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"other other package " +
-                            "id\" /></packages>"});
-#line 14
+                        "C:\\directory2\\packages.config",
+                        "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"package id 3\" /></pa" +
+                            "ckages>"});
+#line 16
   testRunner.Given("There are packages.config files with content", ((string)(null)), table3, "Given ");
-#line 18
-  testRunner.When("getting packages with \"package id\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 20
+  testRunner.When("getting packages with \"package id 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
-                        "package file name"});
-#line 19
+                        "package location",
+                        "package version"});
+#line 21
   testRunner.Then("return packages containing package id", ((string)(null)), table4, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -147,29 +155,62 @@ namespace PackageUseScrutiniser.Core.Tests.PackageFinderTests
         public virtual void PackageDoesExistsWithRequestPackageIdButWithoutVersion()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Package does exists with request package id but without version", ((string[])(null)));
-#line 22
+#line 24
  this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "File name",
                         "content"});
             table5.AddRow(new string[] {
-                        "package1.config",
+                        "C:\\directory\\packages.config",
                         "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"package id\" /></pack" +
                             "ages>"});
-#line 23
- testRunner.Given("There are packages.config files with content", ((string)(null)), table5, "Given ");
-#line 26
+#line 25
+  testRunner.Given("There are packages.config files with content", ((string)(null)), table5, "Given ");
+#line 28
   testRunner.When("getting packages with \"package id\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                        "package file name",
+                        "package location",
                         "package version"});
             table6.AddRow(new string[] {
-                        "package1.config",
+                        "C:\\directory\\",
                         ""});
-#line 27
+#line 29
   testRunner.Then("return packages containing package id", ((string)(null)), table6, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="Package does exists with request package id but in file not named \"packages.confi" +
+            "g")]
+        [Xunit.TraitAttribute("FeatureTitle", "Searching for package configs containing a package id")]
+        [Xunit.TraitAttribute("Description", "Package does exists with request package id but in file not named \"packages.confi" +
+            "g")]
+        public virtual void PackageDoesExistsWithRequestPackageIdButInFileNotNamedPackages_Config()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Package does exists with request package id but in file not named \"packages.confi" +
+                    "g", ((string[])(null)));
+#line 33
+ this.ScenarioSetup(scenarioInfo);
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "File name",
+                        "content"});
+            table7.AddRow(new string[] {
+                        "C:\\directory\\file.config",
+                        "<?xml version=\"1.0\" encoding=\"utf-8\"?><packages><package id=\"package id\" /></pack" +
+                            "ages>"});
+#line 34
+  testRunner.Given("There are packages.config files with content", ((string)(null)), table7, "Given ");
+#line 37
+  testRunner.When("getting packages with \"package id\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "package location",
+                        "package version"});
+#line 38
+  testRunner.Then("return packages containing package id", ((string)(null)), table8, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

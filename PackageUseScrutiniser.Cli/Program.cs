@@ -42,7 +42,7 @@ namespace PackageUseScrutiniser.Cli
 
         private static string FormatResult(FindResult package)
         {
-            return string.Format("version: {0}, found in: {1}", package.PackageVersion, package.PackageName);
+            return string.Format("version: {0}, found in: {1}", package.PackageVersion, package.PackagesConfigLocation);
         }
 
         private static IList<string> GetPaths(string[] args)

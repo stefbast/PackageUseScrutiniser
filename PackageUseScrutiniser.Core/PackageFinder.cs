@@ -5,34 +5,44 @@ namespace PackageUseScrutiniser.Core
 {
     public class PackageFinder
     {
-        public IFileFinder FileFinder { get; set; }
-        public IXmlReader XmlReader { get; set; }
+        private const string PackagesConfigFileName = "packages.config";
+        private readonly int _packagesConfigFileNameLenght = PackagesConfigFileName.Length;
+        private readonly IFileFinder _fileFinder;
+        private readonly IXmlReader _xmlReader;
 
         public PackageFinder(IFileFinder fileFinder, IXmlReader xmlReader)
         {
-            FileFinder = fileFinder;
-            XmlReader = xmlReader;
+            _fileFinder = fileFinder;
+            _xmlReader = xmlReader;
         }
 
         public IEnumerable<FindResult> GetPackages(string packageId, string path)
         {
-            IEnumerable<string> packagesConfigs = FileFinder.GetFiles(path, "packages.config");
+            IEnumerable<string> packagesConfigs = _fileFinder.GetFiles(path, PackagesConfigFileName);
             foreach (var packageConfig in packagesConfigs)
             {
-                var doc = XmlReader.Read(packageConfig);
+                if (!packageConfig.EndsWith(PackagesConfigFileName))
+                {
+                    yield break;
+                }
+
+                var doc = _xmlReader.Read(packageConfig);
                 if (doc.Root == null)
                 {
                     yield break;
                 }
+
                 var packages = doc.Root
                     .Elements("package")
                     .Where(package => package.Attribute("id").Value == packageId)
                     .ToList();
+
                 if (packages.Count > 0)
                 {
                     var versionAttribute = packages.First().Attribute("version");
                     var version = versionAttribute == null ? string.Empty : versionAttribute.Value;
-                    yield return new FindResult {PackageName = packageConfig, PackageVersion = version};
+                    var location = packageConfig.Substring(0, packageConfig.Length - _packagesConfigFileNameLenght);
+                    yield return new FindResult { PackagesConfigLocation = location, PackageVersion = version };
                 }
             }
         }
