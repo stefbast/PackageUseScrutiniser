@@ -19,10 +19,11 @@ namespace PackageUseScrutiniser.Core.Tests.PackageFinderTests
         private class PackageConfigResult
         {
             public string PackageFileName { get; set; }            
+            public string PackageVersion { get; set; }            
         }
 
         private PackageFinder _sut;
-        private IEnumerable<string> _packages;
+        private IEnumerable<FindResult> _packages;
         private string _searchPath = "searchPath";
 
         [Given(@"There are packages\.config files with content")]
@@ -55,7 +56,7 @@ namespace PackageUseScrutiniser.Core.Tests.PackageFinderTests
         [Then(@"return packages containing package id")]
         public void ThenReturnPackagesContainingPackageId(Table table)
         {
-            table.CompareToSet(_packages.Select(p => new PackageConfigResult{ PackageFileName = p}));            
+            table.CompareToSet(_packages.Select(p => new PackageConfigResult{ PackageFileName = p.PackageName, PackageVersion = p.PackageVersion}));            
         }
     }
 }

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileFinder.cs" />
+    <Compile Include="FindResult.cs" />
     <Compile Include="IFileFinder.cs" />
     <Compile Include="IXmlReader.cs" />
     <Compile Include="PackageFinder.cs" />

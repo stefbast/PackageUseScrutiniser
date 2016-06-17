@@ -14,7 +14,7 @@ namespace PackageUseScrutiniser.Core
             XmlReader = xmlReader;
         }
 
-        public IEnumerable<string> GetPackages(string packageId, string path)
+        public IEnumerable<FindResult> GetPackages(string packageId, string path)
         {
             IEnumerable<string> packagesConfigs = FileFinder.GetFiles(path, "packages.config");
             foreach (var packageConfig in packagesConfigs)
@@ -30,7 +30,9 @@ namespace PackageUseScrutiniser.Core
                     .ToList();
                 if (packages.Count > 0)
                 {
-                    yield return packageConfig;
+                    var versionAttribute = packages.First().Attribute("version");
+                    var version = versionAttribute == null ? string.Empty : versionAttribute.Value;
+                    yield return new FindResult {PackageName = packageConfig, PackageVersion = version};
                 }
             }
         }

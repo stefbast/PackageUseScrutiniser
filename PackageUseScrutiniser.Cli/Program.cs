@@ -35,9 +35,14 @@ namespace PackageUseScrutiniser.Cli
 
                 foreach (var package in packageFinder.GetPackages(packageId, path))
                 {
-                    Console.WriteLine(package);
+                    Console.WriteLine(FormatResult(package));
                 }
             }
+        }
+
+        private static string FormatResult(FindResult package)
+        {
+            return string.Format("version: {0}, found in: {1}", package.PackageVersion, package.PackageName);
         }
 
         private static IList<string> GetPaths(string[] args)
